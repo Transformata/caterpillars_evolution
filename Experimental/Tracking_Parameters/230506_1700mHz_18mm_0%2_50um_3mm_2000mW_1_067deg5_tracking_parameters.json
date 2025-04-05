@@ -1,0 +1,28 @@
+{
+    "frame_rate": 28,
+    "picture_width_px": 1280.0,
+    "picture_width_cm": 4.683,
+    "frame_start": 1,
+    "tracking_side": 2,
+    "delta_x": 10,
+    "x_start": 0,
+    "x_stop": 1280,
+    "y_start": 20,
+    "delta_y": 60,
+    "min_area": 5,
+    "min_rect_height": 10,
+    "min_rect_width": 0.001,
+    "blur_area": [
+        5,
+        5
+    ],
+    "threshold_mode": 1,
+    "adaptive_thresh_area": 31,
+    "adaptive_thresh_constant": 25,
+    "apply_morph": false,
+    "morph_type": 2,
+    "morph_kernel_size": [
+        3,
+        3
+    ]
+}
