@@ -12,8 +12,17 @@ from datetime import datetime
 from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 
-path = "G:\Mój dysk\PNaF\Diamentowy_Grant_2017-2021\Swimming_caterpillars_evolution\wyniki\\"
+repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+path_results = os.path.join(repo_root, 'Experimental','Results')
+path_csv = os.path.join(repo_root, 'Simulations','Genetic_Algorithm')
+path_plot_fitness = os.path.join(repo_root, 'Simulations','fitness_functions')
+
+# path = "G:\Mój dysk\PNaF\Diamentowy_Grant_2017-2021\Swimming_caterpillars_evolution\wyniki\\"
+# path = "G:\Mój dysk\PNaF\Diamentowy_Grant_2017-2021\Swimming_caterpillars_evolution\wyniki\symulacja_AG\tabelka\wykresy\\"
+# path_plot_fitness = "G:/Mój dysk/PNaF/Diamentowy_Grant_2017-2021/Swimming_caterpillars_evolution/wyniki/symulacja_AG/average/"
+# path_csv = "G:/Mój dysk/PNaF/Diamentowy_Grant_2017-2021/Swimming_caterpillars_evolution/wyniki/symulacja_AG/"
 
 min_genes_mutated = 1
 max_genes_mutated = 2
@@ -642,8 +651,8 @@ def generate_data_and_plot_fitness_function_8D(path, parameters_list, parameters
     plot_fitness_function_7D(path, index_x, index_y, plot_args, standard_deviation_factor, maxZ)
     return maxZ
 
-def do_simulation(path, path_csv, path_average, individuals_per_generation, min_mut_range, max_mut_range, parameters_list, parameters_list_plot, index_x, index_y, generations_no, shape, standard_deviation_factor, versions):
-    generate_data_and_plot_fitness_function_8D(path_average, parameters_list, parameters_list_plot, index_x, index_y, shape, standard_deviation_factor)
+def do_simulation(path, path_csv, path_plot_fitness, individuals_per_generation, min_mut_range, max_mut_range, parameters_list, parameters_list_plot, index_x, index_y, generations_no, shape, standard_deviation_factor, versions):
+    generate_data_and_plot_fitness_function_8D(path_plot_fitness, parameters_list, parameters_list_plot, index_x, index_y, shape, standard_deviation_factor)
     AG_params_list = get_AG_params_list(min_mut_range, max_mut_range)
     data_list = []
     generations_no_list = []
@@ -672,7 +681,7 @@ def do_simulation(path, path_csv, path_average, individuals_per_generation, min_
         
         # IT WILL PLOT ONLY ONE CHART (FIRST PROBABLY) WHEN UNCOMMENTED
         # max_fitness_list_average, max_fitness_list_standard_deviations, average_fitness_list_average, average_fitness_list_standard_deviations = data_list[i]
-        # plot_generation_average_results(AG_params, path_average, generations_no_list[i],
+        # plot_generation_average_results(AG_params, path_plot_fitness, generations_no_list[i],
         #                                 max_fitness_list_average, max_fitness_list_standard_deviations,
         #                                 average_fitness_list_average, average_fitness_list_standard_deviations,
         #                                 standard_deviation_factor, versions, maxZ)
@@ -680,12 +689,6 @@ def do_simulation(path, path_csv, path_average, individuals_per_generation, min_
     print('simulation done')
     return
 
-
-
-
-path = "G:\Mój dysk\PNaF\Diamentowy_Grant_2017-2021\Swimming_caterpillars_evolution\wyniki\symulacja_AG\tabelka\wykresy\\"
-path_average = "G:/Mój dysk/PNaF/Diamentowy_Grant_2017-2021/Swimming_caterpillars_evolution/wyniki/symulacja_AG/average/"
-path_csv = "G:/Mój dysk/PNaF/Diamentowy_Grant_2017-2021/Swimming_caterpillars_evolution/wyniki/symulacja_AG/"
 
 individuals_per_generation = 8
 
@@ -738,7 +741,7 @@ print(get_parameters_range())
 # standev_list = [0.02,0.04,0.06,0.08,0.1,0.2,0.3,0.4,0.5]
 standev_list = [0.05,0.1,0.25,0.5]
 for standev in standev_list:
-    do_simulation(path, path_csv, path_csv, individuals_per_generation, min_mut_range, max_mut_range, parameters_list, parameters_list_plot, index_x, index_y, generations_no, shape, standev, versions)
+    do_simulation(path, path_csv, path_plot_fitness, individuals_per_generation, min_mut_range, max_mut_range, parameters_list, parameters_list_plot, index_x, index_y, generations_no, shape, standev, versions)
 
 
 #first_generation(individuals_per_generation, path)
