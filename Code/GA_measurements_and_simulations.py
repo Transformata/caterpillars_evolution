@@ -14,10 +14,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
-repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-path_results = os.path.join(repo_root, 'Experimental','Results')
-path_csv = os.path.join(repo_root, 'Simulations','Genetic_Algorithm')
-path_plot_fitness = os.path.join(repo_root, 'Simulations','fitness_functions')
+repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) + '\\'
+path_results = os.path.join(repo_root, 'Experimental','Results') + '\\'
+path_csv = os.path.join(repo_root, 'Simulations','Genetic_Algorithm') + '\\'
+path_plot_fitness = os.path.join(repo_root, 'Simulations','fitness_functions') + '\\'
 
 # path = "G:\Mój dysk\PNaF\Diamentowy_Grant_2017-2021\Swimming_caterpillars_evolution\wyniki\\"
 # path = "G:\Mój dysk\PNaF\Diamentowy_Grant_2017-2021\Swimming_caterpillars_evolution\wyniki\symulacja_AG\tabelka\wykresy\\"
@@ -461,7 +461,7 @@ def plot_fitness_function_7D(path, index_x, index_y, plot_args, standard_deviati
     plt.ylim(min(parameters_range_list_short[1]), max(parameters_range_list_short[1]))
     plt.contourf(x_space,y_space,Z,100)
     plt.title('global maximum: {}'.format(maxZ))
-    plt.savefig(path + 'fitness_function_sigma{}.png'.format(standard_deviation_factor), dpi = 300)
+    plt.savefig(path + 'fitness_function_sigma_{}.png'.format(standard_deviation_factor), dpi = 300)
     plt.show()
     plt.close()
 
@@ -534,7 +534,7 @@ def plot_fitness_function(path, index_x, index_y, plot_args, standard_deviation_
     plt.ylim(parameters_range_list_short[1])
     plt.contourf(x_space,y_space,Z,100)
     plt.title('global maximum: {}'.format(maxZ))
-    plt.savefig(path + 'fitness_function__sigma_factor{}.png'.format(standard_deviation_factor), dpi = 300)
+    plt.savefig(path + 'fitness_function__sigma_factor_{}.png'.format(standard_deviation_factor), dpi = 300)
     plt.show()
     plt.close()
     return maxZ
@@ -583,7 +583,7 @@ def plot_generation_average_results(AG_params, path, generations_no_list, max_fi
     plt.show()
     plt.close()
 
-def simulation(individuals_per_generation, AG_params, path, parameters_range_list, index_x, index_y, generations_no, shape, standard_deviation_factor, version = 0):
+def simulation(individuals_per_generation, AG_params, parameters_range_list, index_x, index_y, generations_no, shape, standard_deviation_factor, version = 0):
     # plot_args = get_plot_args(parameters_range_list, index_x, index_y, shape, standard_deviation_factor)
     # Z = plot_args[4]
     generations_no_list = np.array([])
@@ -651,7 +651,7 @@ def generate_data_and_plot_fitness_function_8D(path, parameters_list, parameters
     plot_fitness_function_7D(path, index_x, index_y, plot_args, standard_deviation_factor, maxZ)
     return maxZ
 
-def do_simulation(path, path_csv, path_plot_fitness, individuals_per_generation, min_mut_range, max_mut_range, parameters_list, parameters_list_plot, index_x, index_y, generations_no, shape, standard_deviation_factor, versions):
+def do_simulation(path_csv, path_plot_fitness, individuals_per_generation, min_mut_range, max_mut_range, parameters_list, parameters_list_plot, index_x, index_y, generations_no, shape, standard_deviation_factor, versions):
     generate_data_and_plot_fitness_function_8D(path_plot_fitness, parameters_list, parameters_list_plot, index_x, index_y, shape, standard_deviation_factor)
     AG_params_list = get_AG_params_list(min_mut_range, max_mut_range)
     data_list = []
@@ -665,7 +665,7 @@ def do_simulation(path, path_csv, path_plot_fitness, individuals_per_generation,
     
         # items = [(AG_params, path, parameters_list, index_x, index_y, generations_no, shape, standard_deviation_factor, i+1) for i in range(versions)]
     
-        results_list = Parallel(n_jobs=11)(delayed(simulation)(individuals_per_generation, AG_params, path, parameters_list, index_x, index_y, generations_no, shape, standard_deviation_factor, i+1) for i in range(versions))
+        results_list = Parallel(n_jobs=11)(delayed(simulation)(individuals_per_generation, AG_params, parameters_list, index_x, index_y, generations_no, shape, standard_deviation_factor, i+1) for i in range(versions))
         max_fitness_list = np.array([i[1] for i in results_list])
         average_fitness_list = np.array([i[2] for i in results_list])
         max_fitness_list_average = np.average(max_fitness_list, axis = 0)
@@ -731,7 +731,7 @@ max_mut_range = [max_mut_start, max_mut_max+max_mut_delta, max_mut_delta]
 #when stop
 generations_no = 5
 #how many times rerun simulation
-versions = 1000
+versions = 1
 
 # AG_params_list = get_AG_params_list(min_mut_range, max_mut_range)
 # simulation(individuals_per_generation, AG_params_list[0], path, parameters_list, -1, -1, 5, shape, standard_deviation_factor, version = 100)
@@ -740,8 +740,8 @@ print(get_parameters_range())
 
 # standev_list = [0.02,0.04,0.06,0.08,0.1,0.2,0.3,0.4,0.5]
 standev_list = [0.05,0.1,0.25,0.5]
-for standev in standev_list:
-    do_simulation(path, path_csv, path_plot_fitness, individuals_per_generation, min_mut_range, max_mut_range, parameters_list, parameters_list_plot, index_x, index_y, generations_no, shape, standev, versions)
+for standev in standev_list[:1]:
+    do_simulation(path_csv, path_plot_fitness, individuals_per_generation, min_mut_range, max_mut_range, parameters_list, parameters_list_plot, index_x, index_y, generations_no, shape, standev, versions)
 
 
 #first_generation(individuals_per_generation, path)
