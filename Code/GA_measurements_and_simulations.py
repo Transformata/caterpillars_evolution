@@ -14,28 +14,25 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
-repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) + '\\'
-path_results = os.path.join(repo_root, 'Experimental','Results') + '\\'
-path_csv = os.path.join(repo_root, 'Simulations','Genetic_Algorithm') + '\\'
-path_plot_fitness = os.path.join(repo_root, 'Simulations','fitness_functions') + '\\'
+experiment = False
+optimization_nr = "1"
+first_generation = False
 
 # path = "G:\Mój dysk\PNaF\Diamentowy_Grant_2017-2021\Swimming_caterpillars_evolution\wyniki\\"
 # path = "G:\Mój dysk\PNaF\Diamentowy_Grant_2017-2021\Swimming_caterpillars_evolution\wyniki\symulacja_AG\tabelka\wykresy\\"
 # path_plot_fitness = "G:/Mój dysk/PNaF/Diamentowy_Grant_2017-2021/Swimming_caterpillars_evolution/wyniki/symulacja_AG/average/"
 # path_csv = "G:/Mój dysk/PNaF/Diamentowy_Grant_2017-2021/Swimming_caterpillars_evolution/wyniki/symulacja_AG/"
 
-min_genes_mutated = 1
-max_genes_mutated = 2
 individuals_per_generation = 8
 
 # elite True = 8 the best of all time 
 elite = True
-
 # selection techniqes, 0 - Roulette wheel, 1 - Rank
 selection_technique = 1
 
-# rank1_probability = rank1_probability_factor/(number of individuals in population)
-#rank1_probability_factor = 3
+min_genes_mutated = 1
+max_genes_mutated = 1
+
 
 # 14 400 possibilities
 frequency_list = [float(i)/10. for i in range(1,51)]
@@ -49,9 +46,9 @@ waveplate_list = [7.5*int(i)+30 for i in range(0,12)]
 tail_list = [0,1]
 
 #test
-frequency_list = [float(i) for i in range(0,120)]
-laserPower_list = [float(i) for i in range(0,120)]
-
+if experiment == False:
+    frequency_list = [float(i) for i in range(0,120)]
+    laserPower_list = [float(i) for i in range(0,120)]
 
 parameters_list = [frequency_list, length_list, dye_list, thickness_list, 
                    period_list, laserPower_list, tail_list, waveplate_list]
@@ -379,8 +376,7 @@ def first_generation(individuals_per_generation, path):
 
 def next_generation(individuals_per_generation, path, AG_params):
     random.seed()
-    last_nr = "09"
-    data_path = path + "optimization_{}.txt".format(last_nr)
+    data_path = path + "optimization_{}.txt".format(optimization_nr)
     results_path = path + "results.txt"
     caterpillar_list = get_all_population(data_path)
     caterpillar_list, result = remove_duplicates(caterpillar_list)
@@ -388,12 +384,12 @@ def next_generation(individuals_per_generation, path, AG_params):
     write_generation(data_path, new_caterpillar_list, results_path)
     return
 
-def get_parameters_range():
+def get_parameters_range(parameters_list):
     parameters_range_list = [[min(parameters_value), max(parameters_value)] for parameters_value in parameters_list]
     return parameters_range_list
 
-def get_parameters_linspace(shape):
-    parameters_range_list = get_parameters_range()
+def get_parameters_linspace(parameters_list, shape):
+    parameters_range_list = get_parameters_range(parameters_list)
     parameters_linspace_list = [np.linspace(parameters_range_list[i][0],parameters_range_list[i][1], shape) for i in range (len(parameters_range_list))]
     return parameters_linspace_list
 
@@ -487,7 +483,7 @@ def count_fitness_value(caterpillars_list, parameters_range_list, standard_devia
 
 def get_plot_args(parameters_range_list, index_x, index_y, shape, standard_deviation_factor):
     parameters_range_list_short = [parameters_range_list[index_x],parameters_range_list[index_y]]
-    parameters_linspace = get_parameters_linspace(shape)
+    parameters_linspace = get_parameters_linspace(parameters_list, shape)
     x_space = parameters_linspace[index_x]
     y_space = parameters_linspace[index_y]
 
@@ -689,7 +685,6 @@ def do_simulation(path_csv, path_plot_fitness, individuals_per_generation, min_m
     print('simulation done')
     return
 
-
 individuals_per_generation = 8
 
 frequency_list = [float(i)/10. for i in range(1,51)]
@@ -731,19 +726,27 @@ max_mut_range = [max_mut_start, max_mut_max+max_mut_delta, max_mut_delta]
 #when stop
 generations_no = 5
 #how many times rerun simulation
-versions = 1
-
-# AG_params_list = get_AG_params_list(min_mut_range, max_mut_range)
-# simulation(individuals_per_generation, AG_params_list[0], path, parameters_list, -1, -1, 5, shape, standard_deviation_factor, version = 100)
-
-print(get_parameters_range())
-
-# standev_list = [0.02,0.04,0.06,0.08,0.1,0.2,0.3,0.4,0.5]
-standev_list = [0.05,0.1,0.25,0.5]
-for standev in standev_list[:1]:
-    do_simulation(path_csv, path_plot_fitness, individuals_per_generation, min_mut_range, max_mut_range, parameters_list, parameters_list_plot, index_x, index_y, generations_no, shape, standev, versions)
+versions = 1000
 
 
-#first_generation(individuals_per_generation, path)
+if __name__ == "__main__":
+    
+    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) + '\\'
+    path_results = os.path.join(repo_root, 'Experimental','Results') + '\\'
+    path_csv = os.path.join(repo_root, 'Simulations','Genetic_Algorithm') + '\\'
+    path_plot_fitness = os.path.join(repo_root, 'Simulations','fitness_functions') + '\\'
+    
+    if experiment:
+        AG_params = [elite, selection_technique, min_genes_mutated, max_genes_mutated]
+   
+        if first_generation:
+            first_generation(individuals_per_generation, path_results)
+        else:
+            next_generation(individuals_per_generation, path_results, AG_params)        
 
-#next_generation(individuals_per_generation, path, AG_params)
+    else:
+        print(get_parameters_range(parameters_list))
+        # standev_list = [0.02,0.04,0.06,0.08,0.1,0.2,0.3,0.4,0.5]
+        standev_list = [0.05,0.1,0.25,0.5]
+        for standev in standev_list:
+            do_simulation(path_csv, path_plot_fitness, individuals_per_generation, min_mut_range, max_mut_range, parameters_list, parameters_list_plot, index_x, index_y, generations_no, shape, standev, versions)
