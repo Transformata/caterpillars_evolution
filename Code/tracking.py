@@ -11,8 +11,6 @@ import json
 import tkinter as tk
 from tkinter import filedialog
 
-# set true for tracking preview
-preview = False
 
 # Create a GUI to select a JSON file
 def select_json_file(repo_root):
@@ -306,17 +304,6 @@ def track_all(preview, save_plot):
     tracking_parameters_files_list = [file_name for file_name in files_names if file_name[-4:] == "json" and file_name[0] == "2"]
     tracking_parameters_files_list.sort()
 
-    # movies_to_track = list()
-    # with open("fit_again.txt", 'r') as file:
-    #     for line in file:
-    #         movies_to_track.append(line)
-    # movies_to_track = [movie[:-4] for movie in movies_to_track]
-    # movies_to_track = list(dict.fromkeys(movies_to_track))
-    # movies_to_track.sort()
-    # tracking_parameters_files_list = [file_name for file_name in tracking_parameters_files_list if file_name.replace("_tracking_parameters.json", "") in movies_to_track]
-    # # print(tracking_parameters_files_list)
-    # tracking_parameters_files_list.sort()
-
     for file in tracking_parameters_files_list:
         json_file_path = os.path.join(tracking_params_path, file)
         params_dict, file_name = load_json_file(json_file_path)
@@ -325,6 +312,9 @@ def track_all(preview, save_plot):
     return
 
 if __name__ == "__main__":      
-    # Track robot's position
+    # set true for tracking preview
+    preview = False
+    # set true to save the position vs time plot
     save_plot = True
+    # Track robot's position
     track_all(preview, save_plot)
