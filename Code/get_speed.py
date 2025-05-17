@@ -153,7 +153,7 @@ def linear_fit_to_position_vs_time(data_path, results_path, plot_path, save_plot
 
 if __name__ == "__main__":
     save_plot = False
-    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    repo_root = '..'
     data_path = os.path.join(repo_root, 'Experimental','Data_Position_vs_Time') 
     results_path = os.path.join(repo_root, 'Experimental', 'Results')
     plot_path = os.path.join(repo_root, 'Experimental','Plots_Position_vs_Time')

@@ -295,7 +295,8 @@ def tracking_params_set(input_dict, file_name, repo_root, preview, save_plot):
     return
 
 def track_all(preview, save_plot):
-    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    # repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) SPR
+    repo_root = '..'
     tracking_params_path = os.path.join(repo_root, 'Experimental','Tracking_Parameters')
 
     # Get all file names in the folder

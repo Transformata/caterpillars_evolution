@@ -731,7 +731,7 @@ versions = 1000
 
 if __name__ == "__main__":
     
-    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) + '\\'
+    repo_root = '..'
     path_results = os.path.join(repo_root, 'Experimental','Results') + '\\'
     path_csv = os.path.join(repo_root, 'Simulations','Genetic_Algorithm') + '\\'
     path_plot_fitness = os.path.join(repo_root, 'Simulations','fitness_functions') + '\\'
