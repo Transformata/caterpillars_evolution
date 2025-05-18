@@ -3,8 +3,6 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from timeit import default_timer as timer
-
 # checked
 class sum_of_Gaussian_functions:
 
@@ -16,8 +14,6 @@ class sum_of_Gaussian_functions:
     def calculate_function(self, x):
         Gaussian_functions_array = np.exp(-1*(x-0.75*self.parameters_range-self.params_min)**2/
                                           (2*self.standard_deviation**2))/(self.standard_deviation*(2*np.pi)**0.5)
-        # result_max = 1/(self.standard_deviation*(2*np.pi)**0.5)
-        # return np.sum(Gaussian_functions_array/result_max, axis=1)
         return np.sum(Gaussian_functions_array, axis=1)
 
 class simulation_PSO:
@@ -55,19 +51,6 @@ class simulation_PSO:
         self.remove_duplicates(PSO=False)
         return
 
-    # def reduce_velocities(self):
-    #     rows, cols = np.where(np.abs(self.velocities) > self.p_max-self.p_min)
-    #     rows = np.delete(rows, np.where(cols==self.waveplate_index))
-    #     cols = np.delete(cols, np.where(cols==self.waveplate_index))
-    #     self.velocities[rows,cols] = (np.sign(self.velocities)*self.p_max-self.p_min)[rows,cols]
-    #     return
-
-    # def reduce_velocities_single(self, i):
-    #     where_limit, = np.where(np.abs(self.velocities[i]) > self.p_max-self.p_min)
-    #     where_limit = np.delete(where_limit, np.where(where_limit==self.waveplate_index))
-    #     self.velocities[i][where_limit] = (np.sign(self.velocities[i])*(self.p_max-self.p_min))[where_limit]
-    #     return
-
     # checked
     def reduce_velocities(self, index=[]):
         if len(index) == 1:
@@ -103,19 +86,6 @@ class simulation_PSO:
             self.velocities[fitness_global_best_index] = np.random.uniform(-1., 1., self.parameters_no)*(self.p_max-self.p_min)#tutaj było 0.1
         self.reduce_velocities()
         return
-
-    # def boundary_conditions(self, p_i):
-    #     p_copy_T = np.copy(self.parameters.T)
-    #     where_sub, = np.where(p_copy_T[p_i] > self.p_max[p_i])
-    #     while len(where_sub) > 0:
-    #         p_copy_T[p_i][where_sub] = np.copy(p_copy_T[p_i][where_sub] - self.p_max[p_i] + self.p_min[p_i])
-    #         where_sub, = np.where(p_copy_T[p_i] > self.p_max[p_i])
-    #     where_add, = np.where(p_copy_T[p_i] < self.p_min[p_i])
-    #     while len(where_add) > 0:
-    #         p_copy_T[p_i][where_add] = p_copy_T[p_i][where_add] + self.p_max[p_i] - self.p_min[p_i]
-    #         where_add, = np.where(p_copy_T[p_i] < self.p_min[p_i])
-    #     self.parameters = p_copy_T.T
-    #     return
 
     # checked
     def boundary_conditions(self, index = []):
@@ -189,35 +159,10 @@ class simulation_PSO:
         self.parameters[i] = np.round(self.parameters[i], 1)
         return
 
-    # def update_parameters(self):
-    #     steps_array = np.round((self.velocities-self.p_min)/self.delta_parameters)
-    #     v_temp = steps_array*self.delta_parameters+self.p_min
-    #     self.parameters = self.parameters + v_temp
-    #     self.boundary_conditions(self.waveplate_index)
-    #     self.reduce_paprameters()
-    #     self.parameters = np.round(self.parameters, 1)
-    #     return
-
-    # def update_parameters_single(self, i):
-    #     steps_array = np.round((self.velocities[i]-self.p_min)/self.delta_parameters)
-    #     v_temp = steps_array*self.delta_parameters+self.p_min
-    #     self.parameters[i] = np.round(self.parameters[i] + v_temp, 1)
-    #     self.boundary_conditions_single(i, self.waveplate_index)
-    #     self.reduce_paprameters_single(i)
-    #     self.parameters[i] = np.round(self.parameters[i], 1)
-    #     return
-
     def single_mutation(self, index):
         if len(index) == 1:
             i = index[0]
-            # parameters_new = np.copy(self.parameters[index])
-            # parameters_list_pd = pd.DataFrame(self.parameters_list)
             p_i = np.random.randint(self.parameters_no)
-            # p_list = np.copy(self.parameters_list_pd.T.to_numpy())
-            # p_list = p_list[~np.isnan(p_list)]
-            # print(p_list)
-            # p_list = np.array(self.parameters_list[p_i])
-            # p_list = np.delete(p_list, np.where(p_list == self.parameters[index][p_i]))
             p_new = np.random.randint(self.parameters_range[p_i])
             self.parameters[i][p_i] = self.parameters_list_np[p_i][p_new]
         else:
@@ -229,13 +174,6 @@ class simulation_PSO:
             rows_p = np.random.randint(self.parameters_no, size=len(i))
             cols_p = np.random.randint(self.parameters_range[rows_p])
             self.parameters[i,rows_p] = self.parameters_list_np[rows_p,cols_p]
-            # parameters_list_pd = pd.DataFrame(self.parameters_list)
-            # i = np.random.randint(len(parameters_list_pd), size = len(i))
-            # p_list = np.array(self.parameters_list[i])
-            # p_list = np.delete(p_list, np.where(p_list == self.parameters[index][p_i]))
-            # p_list = p_list[~np.isnan(p_list)]
-            # print(p_list)
-            # self.parameters[index] = np.random.choice(p_list, 1)[0]
         return
 
     def remove_duplicates(self, previous_parameters = np.array([]), PSO=True): #tutaj następuje produkcja nanów
@@ -326,12 +264,6 @@ def get_new_generation(individuals_no, parameters_list):
         else:
             params = np.append(params,[np.random.choice(parameters_list[i],individuals_no, replace=True)], axis=0)
     caterpillars_list = params.T
-    # unique_parameters, unique_parameters_index = np.unique(caterpillars_list, return_index=True, axis=0)
-    # index_all = np.arange(individuals_no)
-    # while len(unique_parameters) != individuals_no:
-    #     index_duplicates = np.setdiff1d(index_all, unique_parameters_index)
-    #     caterpillars_list[index_duplicates] = single_mutation(caterpillars_list[index_duplicates], parameters_list)
-    #     unique_parameters, unique_parameters_index = np.unique(caterpillars_list, return_index=True, axis=0)
     return caterpillars_list
 
 def append_list_to_string(string, lst, separator=','):
@@ -381,8 +313,6 @@ def append_result_to_csv_PSO(PSO_params, path_csv, data_list, standard_deviation
 def fitness_function_1D(p, parameter_range, p_min, center, standard_deviation_factor):
     standard_deviation = parameter_range*standard_deviation_factor
     result = np.exp(-1*(p-0.75*parameter_range-p_min)**2/(2*standard_deviation**2))/(standard_deviation*(2*np.pi)**0.5)
-    # result_max = 1/(standard_deviation*(2*np.pi)**0.5)
-    # result = result/result_max
     """if p >= center:
         result = np.exp(-1*(p-0.75*parameter_range-p_min)**2/(2*standard_deviation**2))/(standard_deviation*(2*np.pi)**0.5)
     if p < center:
@@ -484,18 +414,13 @@ def single_simulation_PSO(individuals_per_iteration, parameters_list, parameters
         mutation_no = simulation.step(caterpillars_list_all, duplicates)
         mutation_no_list = np.append(mutation_no_list, mutation_no)
         max_fitness_list = np.append(max_fitness_list, simulation.fitness_global_best)
-        # print(simulation.iteration_no)
-        # print(simulation.parameters)
-        # print(simulation.velocities)
-        # print(simulation.fitness)
-        # print('\n')
         average_fitness_list = np.append(average_fitness_list, np.average(simulation.fitness))
         caterpillars_list_all = np.append(caterpillars_list_all, simulation.parameters, axis=0)
         generations_no_list = np.append(generations_no_list,simulation.iteration_no)
     return generations_no_list, max_fitness_list, average_fitness_list, mutation_no_list
 
 def do_simulation_PSO(path_csv, path_average, individuals_per_iteration, parameters_list, parameters_names, parameters_min, parameters_max, w_range, c1_range, c2_range, iterations_no, standard_deviation_factor, versions, parameters_list_plot, index_x, index_y, shape, duplicates=False):
-    generate_data_and_plot_fitness_function_8D(path_average, parameters_list, parameters_list_plot, index_x, index_y, shape, standard_deviation_factor)
+    # generate_data_and_plot_fitness_function_8D(path_average, parameters_list, parameters_list_plot, index_x, index_y, shape, standard_deviation_factor)
     PSO_params_list = get_PSO_params_list(w_range, c1_range, c2_range)
     data_list = []
     # generations_no_list = []
@@ -536,9 +461,7 @@ def do_simulation_PSO(path_csv, path_average, individuals_per_iteration, paramet
     print('standard deviation {:.2f} simulation done'.format(standard_deviation_factor))
     return data_list
 
-path = "G:\Mój dysk\PNaF\Diamentowy_Grant_2017-2021\Swimming_caterpillars_evolution\wyniki\symulacja_AG\tabelka\wykresy\\"
-path_average = "G:/Mój dysk/PNaF/Diamentowy_Grant_2017-2021/Swimming_caterpillars_evolution/wyniki/symulacja_PSO/average/"
-path_csv = "G:/Mój dysk/PNaF/Diamentowy_Grant_2017-2021/Swimming_caterpillars_evolution/wyniki/symulacja_PSO/"
+path_csv = "../Simulations/Particle_Swarm_Optimisation/"
 
 individuals_per_iteration = 8
 
@@ -593,6 +516,7 @@ duplicates = False
 
 standev_list = [0.05,0.1,0.25,0.5]
 duplicates = False
+
 for standev in standev_list:
     duplicates = False
     results = do_simulation_PSO(path_csv, path_csv, individuals_per_iteration, parameters_list, parameters_names, parameters_min, parameters_max, w_range, c1_range, c2_range, iterations_no, standev, versions, parameters_list_plot, index_x, index_y, shape, duplicates)
