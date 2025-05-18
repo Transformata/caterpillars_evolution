@@ -14,8 +14,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
-experiment = False
-optimization_nr = "1"
+experiment = True
+optimization_nr = "2"
 first_generation = False
 
 individuals_per_generation = 8
@@ -365,8 +365,8 @@ def write_generation(data_path, caterpillars_list, results_path=0):
             f.write(line)
         f.write("\n")
 
-def first_generation(individuals_per_generation, path):
-    data_path = path + "parameters_.txt"
+def first_generation(individuals_per_generation, path, optimization_nr):
+    data_path = path + "optimization_{}.txt".format(optimization_nr)
     write_generation(data_path, new_generation(individuals_per_generation))
 
 def next_generation(individuals_per_generation, path, AG_params):
@@ -735,7 +735,7 @@ if __name__ == "__main__":
         AG_params = [elite, selection_technique, min_genes_mutated, max_genes_mutated]
    
         if first_generation:
-            first_generation(individuals_per_generation, path_results)
+            first_generation(individuals_per_generation, path_results, optimization_nr)
         else:
             next_generation(individuals_per_generation, path_results, AG_params)        
 
