@@ -18,11 +18,6 @@ experiment = False
 optimization_nr = "1"
 first_generation = False
 
-# path = "G:\Mój dysk\PNaF\Diamentowy_Grant_2017-2021\Swimming_caterpillars_evolution\wyniki\\"
-# path = "G:\Mój dysk\PNaF\Diamentowy_Grant_2017-2021\Swimming_caterpillars_evolution\wyniki\symulacja_AG\tabelka\wykresy\\"
-# path_plot_fitness = "G:/Mój dysk/PNaF/Diamentowy_Grant_2017-2021/Swimming_caterpillars_evolution/wyniki/symulacja_AG/average/"
-# path_csv = "G:/Mój dysk/PNaF/Diamentowy_Grant_2017-2021/Swimming_caterpillars_evolution/wyniki/symulacja_AG/"
-
 individuals_per_generation = 8
 
 # elite True = 8 the best of all time 
@@ -660,7 +655,7 @@ def do_simulation(path_csv, path_plot_fitness, individuals_per_generation, min_m
         print('elite: {}  selection: {}  min gen mut: {:.1f}  max gen mut: {:.1f}'.format(AG_params[0], selection, AG_params[2], AG_params[3]))
     
         # items = [(AG_params, path, parameters_list, index_x, index_y, generations_no, shape, standard_deviation_factor, i+1) for i in range(versions)]
-    
+
         results_list = Parallel(n_jobs=11)(delayed(simulation)(individuals_per_generation, AG_params, parameters_list, index_x, index_y, generations_no, shape, standard_deviation_factor, i+1) for i in range(versions))
         max_fitness_list = np.array([i[1] for i in results_list])
         average_fitness_list = np.array([i[2] for i in results_list])
