@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this repository or dataset, please cite the following work."
+title: "Survival of the fastest - algorithm-guided evolution of light-powered underwater microrobots"
+authors:
+  - family-names: Rogóż
+    given-names: Mikołaj
+    orcid: https://orcid.org/0000-0001-9723-9189
+date-released: 2025-05-21
+version: 1.0.0
+license: GPL-3.0-only
+repository-code: https://github.com/Transformata/caterpillars_evolution
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.1234
+keywords:
+  - soft robotics
+  - light-driven actuation
+  - liquid crystal elastomers
+  - genetic algorithm
+  - particle swarm optimization
+  - swimming microrobots
+  - data-driven optimization
+url: https://zenodo.org/records/15158295
