@@ -115,10 +115,18 @@ Simulation results include GA/PSO runs and synthetic fitness function evaluation
 
 ### Analysis Scripts
 
-- `tracking.py`: Extracts position-time data from `.mp4` videos using `.json` configuration files.  
-  Saves `.txt` files to `/Data_Position_vs_Time/`. If `save_plot=True`, also saves `.png` plots to `/Plots_Position_vs_Time/`. Use `preview=True` to watch a tracking preview.
+- `tracking.py`:  
+  **Note:** Before running the script, download the videos from the [Zenodo Repository](https://zenodo.org/records/15158295) and place them in `/Experimental/Movies_Optimization/`.  
+  This script extracts position vs. time data from `.mp4` videos using `.json` configuration files.  
+  - Outputs `.txt` files to `/Data_Position_vs_Time/`.  
+  - If `save_plot=True`, it also saves `.png` plots to `/Plots_Position_vs_Time/`.  
+  - Use `preview=True` to display a tracking preview during processing.
 
-- `get_speed.py`: Performs linear fitting on `.txt` files and saves results to `/Results/fitted_speed.txt` and corresponding `.png` plots to `/Plots_Position_vs_Time/`.
+- `get_speed.py`:  
+  Performs linear fitting on `.txt` files from `/Data_Position_vs_Time/` and:  
+  - Appends results to `/Results/fitted_speed.txt`  
+  - Saves `.png` plots of the fitted data to `/Plots_Position_vs_Time/`
+
 
 ### Optimization Scripts
 
