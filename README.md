@@ -21,7 +21,7 @@ caterpillars_evolution/
 │       ├── optimization_2.txt            # GA log for generation 2
 │       ├── result_PSO.xlsx               # PSO experimental data (Excel)
 │       ├── results_GA.xlsx               # GA experimental data (Excel)
-│       └── results_archive.xlsx          # Archived results
+│       └── results_archive.xlsx          # All experimental results
 │
 ├── Simulations/                          # Simulated optimization results
 │   ├── Genetic_Algorithm/                # GA simulation output files
