@@ -26,7 +26,7 @@ caterpillars_evolution/
 ├── Simulations/                          # Simulated optimization results
 │   ├── Genetic_Algorithm/                # GA simulation output files
 │   ├── Particle_Swarm_Optimization/      # PSO simulation output files
-│   └── Fitness_Function/                 # Visualizations of 2D fitness landscapes
+│   └── Fitness_Function/                 # 2D projections of 8D fitness functions used in simulations
 │
 ├── Code/                                 # Analysis and optimization scripts
 │   ├── tracking.py                       # Extracts position data from video using OpenCV
