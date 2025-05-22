@@ -1,44 +1,44 @@
 # 🐛 Caterpillars Evolution: Light-Powered Soft Swimming Robots
 
-This repository contains experimental data, simulation results, and analysis code related to the development and optimization of soft swimming robots powered by light. The project combines physical experiments with evolutionary algorithms—Genetic Algorithm (GA) and Particle Swarm Optimization (PSO)—to improve the robots’ locomotion efficiency.
+This repository contains experimental data, simulation results, and analysis code related to the development and optimization of soft swimming robots powered by light. The project combines physical experiments with evolutionary algorithms, Genetic Algorithm (GA) and Particle Swarm Optimization (PSO), to improve the robots locomotion efficiency.
 
 ---
 
 ## 📁 Repository Structure
 
 ```
-/caterpillars_evolution/
-├── /Experimental/
-│   ├── /Movies_Optimization/         # Raw .mp4 videos (hosted on Zenodo)
-│   ├── /Movies_Self-Oscillation/     # One-shot locomotion experiments
-│   ├── /Data_Position_vs_Time/       # Position vs. time data (.txt)
-│   ├── /Plots_Position_vs_Time/      # Raw and fitted plots (.png)
-│   ├── /Tracking_Parameters/         # Tracking settings (.json)
-│   └── /Results/                     # Aggregated results
-│       ├── fitted_speed.txt
-│       ├── optimization_results.csv
-│       ├── optimization_1.txt
-│       ├── optimization_2.txt
-│       ├── result_PSO.xlsx
-│       ├── results_GA.xlsx
-│       └── results_archive.xlsx
+caterpillars_evolution/
+├── Experimental/                         # Experimental data and video recordings
+│   ├── Movies_Optimization/              # Raw .mp4 videos (hosted on Zenodo)
+│   ├── Movies_Self-Oscillation/          # One-shot locomotion experiments
+│   ├── Data_Position_vs_Time/            # Position vs. time data extracted from videos (.txt)
+│   ├── Plots_Position_vs_Time/           # Raw and fitted position-time plots (.png)
+│   ├── Tracking_Parameters/              # Tracking config files (.json)
+│   └── Results/                          # Aggregated speed and optimization results
+│       ├── fitted_speed.txt              # Linear fit results from get_speed.py
+│       ├── optimization_results.csv      # Summary of GA and PSO experiments
+│       ├── optimization_1.txt            # GA log for generation 1
+│       ├── optimization_2.txt            # GA log for generation 2
+│       ├── result_PSO.xlsx               # PSO experimental data (Excel)
+│       ├── results_GA.xlsx               # GA experimental data (Excel)
+│       └── results_archive.xlsx          # Archived results
 │
-├── /Simulations/
-│   ├── /Genetic_Algorithm/           # GA simulation results
-│   ├── /Particle_Swarm_Optimization/ # PSO simulation results
-│   └── /Fitness_Function/            # 2D visualizations of fitness functions used in simulations
+├── Simulations/                          # Simulated optimization results
+│   ├── Genetic_Algorithm/                # GA simulation output files
+│   ├── Particle_Swarm_Optimization/      # PSO simulation output files
+│   └── Fitness_Function/                 # Visualizations of 2D fitness landscapes
 │
-├── /Code/
-│   ├── tracking.py                   # Position tracking from videos
-│   ├── get_speed.py                  # Speed calculation from tracking data
-│   ├── GA_measurements_and_simulation.py # GA implementation and simulations
-│   ├── PSO_measurements.ipynb        # PSO implementation notebook
-│   └── PSO_simulations.py            # PSO simulations on synthetic data
+├── Code/                                 # Analysis and optimization scripts
+│   ├── tracking.py                       # Extracts position data from video using OpenCV
+│   ├── get_speed.py                      # Calculates speed from position-time data
+│   ├── GA_measurements_and_simulation.py # Runs GA on experiments or simulations
+│   ├── PSO_measurements.ipynb            # PSO (Google Colab-compatible notebook)
+│   └── PSO_simulations.py                # PSO on synthetic fitness functions
 │
-├── LICENSE                           # GPL-3.0 license
-├── .gitignore                        # Ignored files
-├── README.md                         # This file
-└── CITATION.cff                      # Citation metadata
+├── LICENSE                               # Project license (GPL-3.0)
+├── .gitignore                            # Git ignore file
+├── README.md                             # Project documentation
+└── CITATION.cff                          # Citation metadata (for GitHub citation feature)
 ```
 
 ---
@@ -117,7 +117,8 @@ Simulation results include GA/PSO runs and synthetic fitness function evaluation
 
 - `tracking.py`:  
   **Note:** Before running the script, download the videos from the [Zenodo Repository](https://zenodo.org/records/15158295) and place them in `/Experimental/Movies_Optimization/`.  
-  This script extracts position vs. time data from `.mp4` videos using `.json` configuration files.  
+  This script extracts position vs. time data from `.mp4` videos using `.json` configuration files.
+  - Tracking is performed using **OpenCV (opencv-python)** with **adaptive thresholding**.
   - Outputs `.txt` files to `/Data_Position_vs_Time/`.  
   - If `save_plot=True`, it also saves `.png` plots to `/Plots_Position_vs_Time/`.  
   - Use `preview=True` to display a tracking preview during processing.
@@ -168,6 +169,37 @@ Simulation outputs are saved to the appropriate subfolder in `/Simulations/`.
      - Outputs: `.csv` → `/Simulations/Genetic_Algorithm/`, `.png` → `/Simulations/Fitness_Function/`
    - PSO: Run `PSO_simulations.py`
      - Outputs: `.csv` → `/Simulations/Particle_Swarm_Optimization/`
+
+---
+
+## 🧰 Development Environment
+
+All `.py` scripts were developed and tested using:
+
+- **Spyder 6.0.5**
+- **Python 3.12.0**
+
+---
+
+## 📦 Python Dependencies
+
+The following Python packages were used in this project:
+
+| Package         | Version |
+| --------------- | ------- |
+| `opencv-python` | 4.11.0  |
+| `matplotlib`    | 3.10.1  |
+| `numpy`         | 2.2.4   |
+| `tqdm`          | 4.67.1  |
+| `joblib`        | 1.4.2   |
+| `pandas`        | 2.2.3   |
+| `Pillow`        | 11.1.0  |
+
+You can install all dependencies with:
+
+```bash
+pip install opencv-python==4.11.0 matplotlib==3.10.1 numpy==2.2.4 tqdm==4.67.1 joblib==1.4.2 pandas==2.2.3 Pillow==11.1.0
+```
 
 ---
 
