@@ -32,8 +32,8 @@ caterpillars_evolution/
 │   ├── tracking.py                       # Extracts position data from video using OpenCV
 │   ├── get_speed.py                      # Calculates speed from position-time data
 │   ├── GA_measurements_and_simulation.py # Runs GA on experiments or simulations
-│   ├── PSO_measurements.ipynb            # PSO (Google Colab-compatible notebook)
-│   └── PSO_simulations.py                # PSO on synthetic fitness functions
+│   ├── PSO_measurements.ipynb            # Runs PSO on experiments (Google Colab-compatible notebook)
+│   └── PSO_simulations.py                # Runs PSO on simulations with synthetic fitness functions
 │
 ├── LICENSE                               # Project license (GPL-3.0)
 ├── .gitignore                            # Git ignore file
