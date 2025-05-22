@@ -185,10 +185,12 @@ All `.py` scripts were developed and tested using:
 
 ## 📦 Python Dependencies
 
-The following Python packages were used in this project:
+### 🖥️ Local Environment (Python 3.12, Spyder 6.0.5)
+
+The following Python packages were used when running scripts locally:
 
 | Package         | Version |
-| --------------- | ------- |
+|-----------------|---------|
 | `opencv-python` | 4.11.0  |
 | `matplotlib`    | 3.10.1  |
 | `numpy`         | 2.2.4   |
@@ -197,11 +199,31 @@ The following Python packages were used in this project:
 | `pandas`        | 2.2.3   |
 | `Pillow`        | 11.1.0  |
 
-You can install all dependencies with:
+Install locally with:
 
 ```bash
 pip install opencv-python==4.11.0 matplotlib==3.10.1 numpy==2.2.4 tqdm==4.67.1 joblib==1.4.2 pandas==2.2.3 Pillow==11.1.0
 ```
+
+---
+
+### ☁️ Google Colab Environment
+
+For running the PSO notebook in Google Colab, the following packages are used:
+
+| Package               | Version         |
+|------------------------|-----------------|
+| `gspread`              | 6.2.0           |
+| `google-auth`          | 2.38.0          |
+| `numpy`                | 2.0.2           |
+| `pandas`               | 2.2.2           |
+| `pandas-datareader`    | 0.10.0          |
+| `pandas-gbq`           | 0.28.1          |
+| `pandas-stubs`         | 2.2.2.240909    |
+| `pydata-google-auth`   | 1.9.1           |
+| `gspread-dataframe`    | 4.0.0           |
+| `sklearn-pandas`       | 2.2.0           |
+| `geopandas`            | 1.0.1           |
 
 ---
 
